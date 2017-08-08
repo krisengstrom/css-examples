@@ -1,0 +1,359 @@
+@import "variables";
+@import "fonts";
+@import "font-awesome/font-awesome.scss";
+@import "functions";
+@import "mixins";
+@import "reset";
+
+//  ==========================================================================
+//  Primary Styles
+//  ==========================================================================
+html {-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; height:100%;}
+body {font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /*font-family:'Lato', sans-serif;*/ font-size:$font-size-base; font-weight:400; font-style:normal; background:#fff; padding-top:0; color:$color-text; height:100%;
+	//&.has-feature {padding-top:$headerHeight}
+}
+a {color:$green; text-decoration:underline; cursor:pointer;
+	&:hover {color:$grey;}
+}
+img {max-width:100%;}
+nav ul, nav ol {margin:0; padding:0; list-style:none;}
+button {outline:none;}
+
+::-moz-selection {background:$green; color:#fff;}
+::selection {background:$green; color:#fff;}
+
+//  ==========================================================================
+//  Classes
+//  ==========================================================================
+.container {max-width:$containerWidth; margin:0 auto;}
+.content-container {width:100%; max-width:$contentWidth; margin:0 auto;}
+.box {border:1px solid $color-text; padding:$inner;}
+ul.indexed {
+	li a {display:block; position:relative; padding-left:30px;}
+	span {display:block; position:absolute; width:20px; height:100%; left:0px;}
+}
+.group {@include group; margin:0 (-$gutterWidth/2);
+@include breakpoint(mobile) {
+	margin:0;
+}}
+.half {width:calc(50% - 60px); float:left; @include vendor(box-sizing, border-box); margin:0 $gutterWidth/2;
+@include breakpoint(mobile) {
+	width:100%; float:none; margin:0;
+}}
+.highlight-color {color:$green}
+.highlight-fill {fill:$green}
+.highlight-background {background:$green}
+//  ==========================================================================
+//  Layout
+//  ==========================================================================
+#skip-to-content {display:none;
+	&:focus {display:block;}
+}
+#nav-bar {position:fixed; width:100%; left:0; top:0; z-index:500; background:$darkgrey; height:$headerHeight; @include group;
+	.container {}
+	img {height:40px; margin:20px 0 0 25px;
+		&.mobile {display:none; margin:0 15px 0 0; position:relative; top:8px;}
+	}
+	nav {width:350px; position:absolute; right:0; top:0;
+		.toggle {text-align:left; background:$green; border:none; display:block; margin:0; height:$headerHeight; line-height:$headerHeight; color:#fff; padding:0 40px; font-size:24px; text-transform:none; font-weight:700; cursor:pointer;
+			&:after {@include font-awesome('\f107'); position:absolute; right:40px; line-height:77px; font-size:30px;}
+		}
+		>ul {background:rgba(129,192,74,0.9);}
+		ul,ol {display:none; padding:40px 0; font-size:16px;
+			li a {color:#fff; text-decoration:none; display:block; padding:10px 40px 10px 70px; cursor:pointer; position:relative; font-weight:700;
+				&:hover {color:#000;}
+				span {display:block; position:absolute; width:20px; height:100%; left:40px;}
+			}
+			li.current a {color:#000}
+			li.download a {height:80px; width:80%; margin:0 auto; text-align:center; color:#000; background:#fff; line-height:80px; text-decoration:none; padding:0; margin-top:$inner; text-transform:uppercase;
+				&:hover {color:$green}
+			}
+		}
+		&.open {//&:hover {
+			.toggle:after {content:'\f106';}
+			ul,ol {display:block;}
+		}
+	}
+@include breakpoint(mobile) {
+	img {display:none;
+		&.mobile {display:inline;}
+	}
+	nav {width:100%; top:0;
+		.toggle {padding:0 70px 0 20px; font-size:18px; text-align:right;
+			img {float:left; top:25px;}
+		}
+	}//top:auto;}
+}}
+@-webkit-keyframes headerchange {
+	0% {opacity:0;}
+	50% {}
+	100% {opacity:1;}
+}
+#site-header { position:relative; width:100%; height:100%; z-index:400;
+	.cover {position:relative; overflow:hidden; background-attachment:fixed; background-size:cover; background-position:center center; height:100%;
+		img {width:auto; max-width:none; height:100%; display:block; margin:0 auto;}
+	}
+	.heading-bar {position:absolute; width:100%; height:auto; bottom:0; background:$bluegrey;}
+	h1 {margin-top:0; margin-bottom:10px; font-size:38px; padding:0; text-transform:none; font-weight:700; color:#fff; @include vendor(transition, all .2s);
+		br {display:none;}
+	}
+	h2 {display:block; font-size:14px; text-transform:none; margin:0; padding:20px 0 0 0; color:#fff; font-weight:400; line-height:19px;
+		.highlight-color {margin-right:15px;}
+	}
+
+@include breakpoint(content-container) {
+	h1 {padding:0 $gutterWidth/2; @include vendor(box-sizing, border-box);}
+	h2 {padding:20px $gutterWidth/2 0 $gutterWidth/2}
+}
+@include breakpoint(mobile) {position:static !important; top:80px; left:0; height:auto !important;
+	.cover {height:300px !important; background-repeat:no-repeat;
+		background-position:center 0px; background-size:auto 300px;
+		img {width:100%; height:auto;}
+	}
+	.heading-bar {height:auto !important; position:static !important; padding-bottom:20px;}
+	h1 {font-size:40px !important; line-height:42px !important; padding:0 20px; @include vendor(box-sizing, border-box);
+		br {display:none !important;}
+	}
+	h2 {padding:20px 20px 0 20px;}
+}}
+.has-feature {
+	#site-header {
+		h1 {font-size:100px; line-height:100px;
+			br {display:block;}
+		}
+	}
+	&.header-fixed {
+		#site-header {
+			.heading-bar {height:100px; position:fixed; top:80px; height:100px;}
+			h1 {font-size:38px; line-height:41px; @include vendor(animation, headerchange 2s);
+				br {display:none;}
+			}
+		}
+	}
+}
+.no-feature {padding-top:180px;
+	#site-header {position:fixed; top:80px; height:100px;
+		.heading-bar {height:100px;}
+	}
+@include breakpoint(mobile) {
+	padding-top:80px;
+}}
+
+#site-main {@extend .container; max-width:$contentWidth; outline:none;
+	#content {@include group; line-height:26px;}
+	article {margin-top:$gutterWidth; margin-bottom:$gutterWidth;
+		.article-index {float:left; max-width:40%; margin: 0 $inner 10px (-(($footerWidth - $contentWidth) /2)); font-size:144px; color:$green; font-weight:700; margin-top:40px;}
+		h1 {font-size:48px; line-height:51px; font-weight:700; margin-top:0; color:$darkgrey;}
+		h2 {font-size:30px; line-height:33px; color:$green; font-weight:700; margin-top:1.7em;}
+		h3 {font-size:24px; line-height:27px; color:$green; font-weight:700; margin-top:1.7em;}
+		h4 {font-size:20px; line-height:23px; color:$darkgrey; font-weight:700; margin-top:1.7em;}
+		h5, h6 {font-size:16px; line-height:19px; color:$darkgrey; font-weight:400; margin-top:1.7em;}
+		blockquote {font-size:$font-size-base; line-height:24px; margin:1em 0; padding:0 0 0 $inner; border-left:10px solid $color-text-mute;
+			cite {display:block; font-size:12px; color:$grey; line-height:15px; font-style:normal; margin-top:12px; font-weight:400;
+				&:before {content:'\2013'; margin-right:5px;}
+			}
+		}
+		figure {margin:$gutterWidth 0; text-align:center;
+			p {margin:0;}
+			&.align-left {float:left; max-width:40%; margin: 0 $inner 10px (-(($footerWidth - $contentWidth) /2));}
+			&.align-right {float:right; max-width:40%; margin: 0 (-(($footerWidth - $contentWidth) /2)) 10px $inner;}
+			&.align-center {}
+			&.size-breakout {float:none; position:relative; margin: $gutterWidth (-(($footerWidth - $contentWidth) /2)) $gutterWidth (-(($footerWidth - $contentWidth) /2));}
+			&.pull-quote {max-width:55%;
+				blockquote {text-align:left; font-size:20px; line-height:28px; font-weight:700; color:$green; font-style:normal; padding:0; border:none;}
+			}
+		}
+		figcaption {color:$color-text; font-size:12px; line-height:12px;}
+		table {border-collapse:collapse; width:100%; text-align:left; margin:1em 0;
+			th {border:2px solid #fff; background:$green; color:#fff; padding:10px 20px; font-size:18px;}
+			tbody th {background:$bluegrey;}
+			td {border:2px solid #fff; padding:10px 20px;}
+			tr {
+				&:nth-child(odd) {background:#d4d4d4;}
+				&:nth-child(even) {background:#f6f6f6;}
+			}
+		}
+		//sup[id^="fn"] {padding-top:$headerHeight;}
+
+		ul, ol {color:$color-text; line-height:26px;
+			li {margin:0.7em 0;}
+		}
+		code {font-family:Courier, monospace, serif; font-size:$font-size-base; line-height:24px;}
+		dl {@include group;
+			dt {float:left; width:20%; font-weight:700;}
+			dd {margin:0; float:right; width:80%;}
+		}
+		hr {border:none; height:1px; background:#d4d4d4; margin:30px 0;}
+		table {}
+		.footnotes {font-size:12px; line-height:24px; color:#0f0f0f;
+			li, p {margin:0;}
+		}
+	}
+@include breakpoint(container) {
+	article {
+		.article-index {float:none; margin:0;}
+		figure {
+			&.align-left {margin:0 $inner/2 10px 0;}
+			&.align-right {margin:0 0 10px $inner/2;}
+			&.size-breakout {margin:0;}
+		}
+	}
+}
+@include breakpoint(content-container) {padding:0 $gutterWidth/2;
+	article {
+		figure.align-left, figure.align-right {float:none; max-width:100%; margin:20px 0;}
+	}
+}
+@include breakpoint(mobile) {
+	padding:0 20px;
+	article {
+		dl {
+			dt {float:none; width:auto; margin-top:10px;}
+			dd {float:none; width:auto;}
+		}
+	}
+}}
+#site-footer {@extend .container; margin:$gutterWidth auto; max-width:$footerWidth;
+	nav ul {background:#000; @include group;
+		li {float:left; @include vendor(box-sizing, border-box); width:40%; position:relative; cursor:pointer; background:#000; font-size:24px;
+			&:nth-child(2) {width:20%; text-align:center;
+				a {background:$green;
+					&:hover {color:#000; background:$green;}
+				}
+			}
+			&:nth-child(3) {text-align:right;}
+			a {height:$footerHeight; line-height:$footerHeight; display:block; background:#000; color:#fff; padding:0 40px; font-weight:700; text-decoration:none; overflow:hidden;
+				&:hover {color:$green;}
+			}
+			&:nth-child(1):before {@include font-awesome('\f104'); position:absolute; left:20px; line-height:$footerHeight; color:#fff; font-size:21px;}
+			&:nth-child(3):before {@include font-awesome('\f105'); position:absolute; right:20px; line-height:$footerHeight; color:#fff; font-size:21px;}
+			&:nth-child(1):hover:before, &:nth-child(3):hover:before {color:$green;}
+
+			&.disabled {cursor:default;
+				&:before {display:none;}
+				a {cursor:default;}
+				a:hover {background:#000; color:$green;}
+			}
+		}
+	}
+	#scroll-top {display:block; margin:$gutterWidth auto; background:transparent; border:none;
+		&:before {@include font-awesome('\f106'); color:$green; font-size:36px; width:40px; height:40px; border-radius:50%;}
+		&:hover:before {background:$green; color:#fff;}
+	}
+	.logo {display:block; margin:$gutterWidth auto; width:170px;
+		path {fill:#000;}
+	}
+	p {font-size:12px; line-height:17px; color:$color-text-mute; text-align:center; max-width:$contentWidth; margin:1em auto;}
+
+@include breakpoint(mobile) {
+	nav ul li {font-size:0; width:25%;
+		&:before {font-size:40px}
+		&:nth-child(2) {font-size:$font-size-base; width:50%;}
+
+	}
+}}
+#lightbox {width:100%; height:100%; background:rgba(0,0,0,0.9); position:fixed; top:0; left:0; z-index:600; display:none; text-align:center;
+	svg {position:absolute; top:$gutterWidth; right:$gutterWidth; background:url('../images/icon-close.svg') no-repeat; background-size:100% auto; width:40px; height:40px; cursor:pointer;}
+	img {max-width:90%; height:auto; max-height:90%; cursor:zoom-out !important;
+		&.portrait {max-height:90%; width:auto; max-width:90%;}
+	}
+@include breakpoint(mobile) {
+	&:before {top:20px; right:20px;}
+}}
+
+//Make space for admin bar
+body.admin-bar {padding-top:112px;
+	#nav-bar {top:32px;}
+	//sup[id^="fn"] {padding-top:112px;}
+}
+
+//  ==========================================================================
+//  Index/ToC specific styles
+//  ==========================================================================
+article#post-0 {
+
+	ul.indexed {margin:1em 0;
+		li {margin:0 0 10px 0;
+			a {color:#000; font-weight:700;
+				&:hover {color:$green;}
+			}
+		}
+	}
+}
+
+//  ==========================================================================
+//  Document page
+//  ==========================================================================
+.single-cos_document {
+	[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {display: none !important;}
+}
+
+//  ==========================================================================
+//  Home page / document archive
+//  ==========================================================================
+.home {padding-top:$headerHeight;
+	#site-main {max-width:$footerWidth;
+		article {float:left; width:25%; padding:$inner/2; @include vendor(box-sizing, border-box); margin-bottom:$gutterWidth;
+			h1 {font-size:$font-size-base; font-weight:400; line-height:19px; margin:10px 0 5px;
+				a {color:$color-text;}
+			}
+			img {width:100%; height:auto;}
+			span {color:$color-text-mute;}
+		}
+		.article-list {margin:$gutterWidth (-$inner/2) 0; @include group;}
+	}
+@include breakpoint(container) {
+	#site-main {
+		article {width:50%;}
+		//.article-list {margin:$gutterWidth 0;}
+	}
+}
+@include breakpoint(mobile) {
+	#site-main {
+		article {width:100%;}
+		//.article-list {margin:$gutterWidth (-$inner/2) 0;}
+	}
+}}
+
+
+//  ==========================================================================
+//  Print Styles
+//  ==========================================================================
+@media print {
+	* { background:transparent !important; color:#000 !important; box-shadow:none !important; text-shadow:none !important; filter:none !important; -ms-filter:none !important; } /* Black prints faster:h5bp.com/s */
+	a, a:visited { text-decoration:underline; }
+	a[href]:after { content:" (" attr(href) ")"; }
+	abbr[title]:after { content:" (" attr(title) ")"; }
+	.ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content:""; }  /* Don't show links for images, or javascript/internal links */
+	pre, blockquote { /* border:1px solid #999; */ page-break-inside:avoid; }
+	thead { display:table-header-group; } /* h5bp.com/t */
+	tr, img, figure { page-break-inside:avoid; }
+	img { max-width:100% !important; }
+	//@page { margin:0.5cm; }
+	p, h2, h3 { orphans:3; widows:3; }
+	h2, h3 { page-break-after:avoid; }
+
+	body {padding-top:0;}
+	table th, table td {border:1px solid #000;}
+	.ng-hide:not(.ng-hide-animate) {display:block !important;}
+	#nav-bar {position:static; display:none;} 
+	#site-header {position:static; page-break-after:always; padding-top:70%;
+		.cover {display:none !important;
+			img {display:none !important;}
+		}
+	}
+	.no-feature #site-header {position:static;
+		h1 {font-size:100px; line-height:100px;
+			br {display:block;}
+		}
+	}
+	#site-main #content {
+		article {page-break-after:always;
+			.article-index {margin:0 20px 0 0; font-size:48px; line-height:51px;}
+			figure {
+				&.align-left {margin:0 $inner/2 10px 0;}
+				&.align-right {margin:0 0 10px $inner/2;}
+			}
+		}
+	}
+}

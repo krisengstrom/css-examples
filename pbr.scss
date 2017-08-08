@@ -1,0 +1,345 @@
+@import "variables";
+@import "fonts";
+@import "mixins";
+@import "reset";
+@import "font-awesome/font-awesome";
+
+//  ==========================================================================
+//  General styles
+//  ==========================================================================
+body {background:#eef2f7; color:$text-color; font-family:'ProximaNovaSoft-Regular'; font-size:16px; padding-bottom:$gutterWidth;}
+h1 {font-weight:normal; font-size:32px; margin:18px 0 0;}
+h2 {font-weight:normal; font-size:18px; margin:0;}
+h3 {font-weight:normal; font-size:16px; margin:0;}
+h4 {font-weight:normal; font-size:14px; margin:0;}
+a {color:$pink; text-decoration:none;
+	&:hover {border-bottom:1px solid $pink;}
+}
+nav ul {margin:0; padding:0; list-style:none;}
+p {line-height:24px;}
+table {width:100%;
+	th {text-align:left; padding-bottom:16px; font-size:16px; color:#8192a8; font-weight:normal;}
+	tbody td {@extend .border; padding:20px 0; @include vendor(transition, background .2s)}
+	//tbody tr:last-child td {padding-bottom:0;}
+	tbody tr:hover td {background:#f6f8fb; position:relative;
+		&:first-child:after, &:last-child:after {background:#f6f8fb;}
+	}
+	tbody tr.highlighted td {background:#d4dae4; position:relative;
+		&:first-child:after, &:last-child:after {background:#f6f8fb;}
+	}
+	tbody tr.highlighted-clicked td {background:#b3c5e4; position:relative; cursor:pointer;
+		&:first-child:after, &:last-child:after {background:#b3c5e4;}
+	}
+	tbody tr td {
+		&:first-child:after {content:''; background:#fff; position:absolute; width:20px; height:100%; left:-20px;top:1px; @include vendor(transition, background .2s)}
+		&:last-child:after {content:''; background:#fff; position:absolute; width:20px; height:100%; right:-20px; top:1px; @include vendor(transition, background .2s)}
+	}
+	td {text-align:left;}
+}
+
+//  ==========================================================================
+//  Helper classes
+//  ==========================================================================
+.container {max-width:$containerWidth; margin:0 auto;}
+.group {@include group;}
+.center {text-align:center;}
+.flat {margin:0;}
+.right {text-align:right;}
+.row {@include group; margin:-1%;}
+.col {float:left;
+	&.half {width:50%; margin:1%;}
+	&.third {width:31.3332%; margin:1%}
+	&.sixth {width:14.6666%; margin:1%}
+	&.nomargin {margin:0;}
+
+@include breakpoint(mobile) {float:none;
+	&.half {width:100%;}
+	&.third {width:100%;}
+	&.sixth {width:100%;}
+}}
+.card {overflow:hidden; border-radius:4px; margin-bottom:15px; box-sizing:border-box; padding:20px 20px 0; background:#fff; box-shadow:0 1px 4px 0 rgba(5, 18, 30, 0.14), inset 1px 1px 0 0 rgba(255, 255, 255, 0.1);
+	//&:first-child {margin-bottom:40px;}
+	header {padding-bottom:20px;
+		h2 {font-size:24px;}
+	}
+	footer {font-size:14px; padding-top:20px; padding-bottom:20px; margin-top:20px;
+		span:before {content:''; display:inline-block; margin:0 10px 0 6px; position:relative; top:-2px; width:3px; height:3px; background:#d1dce7; border-radius:50%;}
+		span:first-child:before {display:none;}
+	}
+	table.std {
+		tr {cursor:pointer;}
+		td, th {
+			&:first-child() {}
+			&:nth-child(1) {}
+			&:nth-child(2) {width:160px;}
+			&:nth-child(3) {width:120px;}
+			&:nth-child(4) {width:120px;}
+			&:nth-child(5) {width:120px;}
+		}
+	}
+}
+.border {position:relative;
+	&:before {content:''; width:200%; top:0; left:-50%; height:1px; background:#d1dce7; position:absolute; opacity:.5;}
+}
+.details {height:0; overflow:hidden; @include vendor(transition, height .4s); transform:translate3d(0,0,0);
+	&.open {height:auto;}
+	//table {overflow:visible;}
+	table th {padding:20px 10px 0;}
+	//table {border-right:1px solid #d1dce7; border-left:1px solid #d1dce7;}
+	table tr td {background:#f6f8fb; padding:10px 10px; font-size:11px;}
+	table tr td:first-child, table tr th:first-child {padding-left:20px;}
+	table tr td:last-child, table tr th:last-child {padding-right:20px;}
+	table tr:hover td {background:#ececec}
+	table tbody tr {cursor:pointer;}
+}
+.child+.details {@include vendor(transition, none);}
+.name-icon {font-size:16px; font-family:ProximaNovaSoft-Medium; width:40px; line-height:42px; text-align:center; height:40px; color:#fff; border-radius:20px; text-transform:uppercase; display:inline-block;
+	&.blue {background:$blue}
+	&.yellow {background:$yellow}
+	&.purple {background:$purple}
+}
+tbody tr:nth-child(3n+1) .name-icon {background:$blue}
+tbody tr:nth-child(3n+2) .name-icon {background:$yellow}
+tbody tr:nth-child(3n+3) .name-icon {background:$purple}
+.account-sections {
+	section {margin-top:40px; //margin-top:80px;
+		//&:after {content:''; display:block; background:#c7ccd2; width:100%; height:1px; position:relative; top:40px;}
+	}
+	section .card {padding-left:0; padding-right:0;}
+	section:nth-child(3n+1) .account-info {border-left:4px solid $blue;}
+	section:nth-child(3n+2) .account-info {border-left:4px solid $yellow;}
+	section:nth-child(3n+3) .account-info {border-left:4px solid $purple;}
+	section:nth-child(3n+1) .divider {background: $blue; position:relative; overflow:hidden;}
+	section:nth-child(3n+2) .divider {background: $yellow; position:relative; overflow:hidden;}
+	section:nth-child(3n+3) .divider {background: $purple; position:relative; overflow:hidden;}
+	.card table.child {position:relative;
+		tr:before {content:''; width:4px; height:100%; position:absolute; z-index:2; top:0; left:-20px;}
+		tr.green:before {background:$green}
+		tr.red:before {background:$red}
+		tr.yellow:before {background:$yellow}
+		tr.orange:before {background:$orange}
+		tr.purple:before {background:$purple}
+		tr:after {content:''; background:transparent; width:20px; position:absolute; right:-20px; top:0; height:100%; @include vendor(transition, background .2s)}
+		tr:hover:after {background:#f6f8fb;}
+		tbody td {padding:10px;}
+	}
+	.icon.plus {width:10px; height:10px; float:right; position:relative; top:4px; display:inline-block; background:url(../images/plus.png) no-repeat; @include vendor(transition, transform .5s);
+		&.spun {@include vendor(transform, rotate(45deg));}
+	}
+}
+
+.tag {border-radius:2px; margin:4px 0; text-transform:uppercase; color:#fff; font-size:10px; font-family:ProximaNovaSoft-Bold; padding:2px 4px; display:inline-block;
+	&.green {background:$green}
+	&.red {background:$red}
+	&.yellow {background:$yellow}
+	&.orange {background:$orange}
+	&.purple {background:$purple}
+	&.teal {background:$teal}
+	&.blue {background:$blue}
+	&.pink {background:$pink}
+	&.brightred {background:$brightred}
+}
+.mute {color:#8192a8;}
+.mute-label {color:#8192a8; font-size:14px; padding:0; margin:0;}
+.negative {color:$red; font-family:ProximaNovaSoft-Medium;
+	&:before {content:'-';}
+}
+.positive:before {content:'+'; color:$green;}
+
+//  ==========================================================================
+//  Keyframes
+//  ==========================================================================
+@keyframes shimmer {
+	0% {top:0; left:-70%;}
+	50% {top:0; left:70%}
+	100% {top:0; left:-70%}
+}
+
+//  ==========================================================================
+//  Layout
+//  ==========================================================================
+#site-header {padding:30px; box-sizing:border-box; height:217px; color:#fff;  position:relative; overflow:hidden; background:#d71377;
+	&:before {content:''; width:100%; height:100%; position:absolute; top:0; left:0; animation:shimmer 40s linear infinite;
+		/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#d71377+0,a93bff+52,d71377+100&0.6+0,0.8+53,0.6+100 */
+		background: -moz-linear-gradient(left,  rgba(215,19,119,0.6) 0%, rgba(169,59,255,0.8) 52%, rgba(170,58,252,0.8) 53%, rgba(215,19,119,0.6) 100%); /* FF3.6-15 */
+		background: -webkit-linear-gradient(left,  rgba(215,19,119,0.6) 0%,rgba(169,59,255,0.8) 52%,rgba(170,58,252,0.8) 53%,rgba(215,19,119,0.6) 100%); /* Chrome10-25,Safari5.1-6 */
+		background: linear-gradient(to right,  rgba(215,19,119,0.6) 0%,rgba(169,59,255,0.8) 52%,rgba(170,58,252,0.8) 53%,rgba(215,19,119,0.6) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99d71377', endColorstr='#99d71377',GradientType=1 ); /* IE6-9 */
+	}
+	.container {position:relative;}
+	.address {text-transform:uppercase; font-size:13px; letter-spacing:1px; margin-top:8px;}
+	img {margin-top:20px;}
+	.stats {padding:15px; right:0; margin-top:30px; position:absolute; background:rgba(255, 255, 255, 0.04); border-radius:4px; width:300px; box-shadow: 0 1px 4px 0 rgba(5, 18, 30, 0.2), inset 1px 1px 0 0 rgba(255, 255, 255, 0.1);
+		.col {text-align:center; padding:0; font-size:14px;}
+		span {display:block; font-size:32px;}
+	}
+}
+.content-wrapper {position:relative; top:-10px;}
+#content {float:right; width:($containerWidth - 300)}
+#sidebar {float:left; width:270px;
+	.summary {padding:34px 0; font-size:14px;
+		span {font-size:24px; display:block; margin-bottom:6px;
+			//&:before {content:'+'; color:$green;}
+		}
+		&.debits span {color:$red;
+			&:before {content:'-'; color:$red;}
+		}
+	}
+	.card {padding-bottom:0;}
+	.accounts {margin-top:40px;}
+	.accounts .card {padding-left:0; padding-right:0;}
+	.accounts {width:270px;
+		.card:first-child {margin-bottom:15px;}
+		.card:nth-child(3n+1) .name-icon {background:$blue}
+		.card:nth-child(3n+2) .name-icon {background:$yellow}
+		.card:nth-child(3n+3) .name-icon {background:$purple}
+	}
+	h2 {padding:10px 0 28px 76px; cursor:pointer; position:relative;
+		.name-icon {margin-right:16px; position:absolute; left:20px; top:0;}
+	}
+	>.card:first-child h2 {padding:0; padding-bottom:18px;}
+	nav ul {
+		li {@extend .border; cursor:pointer; display:block; padding:17px 20px; color:#8192a8; position:relative; @include vendor(transition, background .8s);
+			i {position:absolute; right:20px; color:#8192a8 !important;}
+			&:after {content:''; background:$text-color; width:2px; opacity:0; height:100%; position:absolute; top:0; left:0px; @include vendor(transition, opacity .2s);}
+			&.active, &:hover {color:$text-color; background:#f6f8fb;
+				&:after {opacity:1}
+			}
+		}
+	}
+	nav {max-height:0px; @include vendor(transition, all .5s); overflow:hidden;}
+	.card.active nav {max-height:500px;}
+}
+.sidebarfixed {
+	#sidebar .accounts {position:fixed; top:15px; margin-top:0;}
+}
+
+//  ==========================================================================
+//  Content card specific
+//  ==========================================================================
+.account-table tbody tr {cursor:pointer;
+	td:nth-child(3) {padding-left:15px;}
+	.name-icon {margin-right:15px;}
+}
+.account-sections section {
+	.post-row {border-left:4px solid #f6f8fb; position:relative; @include vendor(transition, all .4s); transform: translate3d(0,0,0);
+		&:before {width:0px; height:4px; background:$purple; position:absolute; top:-2px; left:-4px; content:''; @include vendor(transition, width .4s); z-index:2; transform: translate3d(0,0,0);}
+		&:after {width:0px; height:4px; background:$purple; position:absolute; bottom:-2px; left:-4px; content:''; @include vendor(transition, width .4s); z-index:2; transform: translate3d(0,0,0);}
+		&.green {&:before, &:after {background:$green;}}
+		&.red {&:before, &:after {background:$red;}}
+		&.yellow {&:before, &:after {background:$yellow;}}
+		&.orange {&:before, &:after {background:$orange;}}
+		&.purple {&:before, &:after {background:$purple;}}
+		&.teal {&:before, &:after {background:$teal;}}
+		&.blue {&:before, &:after {background:$blue;}}
+		&.pink {&:before, &:after {background:$pink;}}
+		&.brightred {&:before, &:after {background:$brightred;}}
+		&.open {@include vendor(transition, all 0s);
+			&:before, &:after {width:20px;}
+			&.green {border-color:$green;
+				&:before, &:after {background:$green;}
+			}
+			&.red {border-color:$red;
+				&:before, &:after {background:$red;}
+			}
+			&.yellow {border-color:$yellow;
+				&:before, &:after {background:$yellow;}
+			}
+			&.orange {border-color:$orange;
+				&:before, &:after {background:$orange;}
+			}
+			&.purple {border-color:$purple;
+				&:before, &:after {background:$purple;}
+			}
+			&.teal {border-color:$teal;
+				&:before, &:after {background:$teal;}
+			}
+			&.blue {border-color:$blue;
+				&:before, &:after {background:$blue;}
+			}
+			&.pink {border-color:$pink;
+				&:before, &:after {background:$pink;}
+			}
+			&.brightred {border-color:$brightred;
+				&:before, &:after {background:$brightred;}
+			}
+		}
+	}
+	header {padding-left:20px; padding-right:20px;}
+	table.std {margin:0 20px; width:calc(100% - 40px);}
+	.account-info {padding-left:20px; padding-right:20px;
+		h2 {font-size:24px;
+			.mute {font-size:18px; text-transform:capitalize;}
+		}
+		h3 {
+			&+h2 {margin-top:20px;}
+		}
+		h4 {font-size:18px; margin-top:25px;}
+	}
+	.divider {text-align:center; padding:20px 0; color:#fff;
+		.name-icon {position:relative; overflow:hidden; text-align:center; vertical-align:middle; margin-right:15px;
+			&:before {content:''; width:100%; height:100%; position:absolute; background:rgba(255,255,255,0.2); top:0; left:0;}
+		}
+	}
+	.saac-loans {
+		.post-row {border-left:none;
+			&.open {border-color:#f6f8fb;
+				&:before, &:after {display:none}
+			}
+			.details {position:relative;
+				&:after {width:0px; height:4px; background:$red; position:absolute; bottom:0px; left:-4px; content:''; @include vendor(transition, width .4s); z-index:2; transform: translate3d(0,0,0);}
+			}
+			.child {position:relative;
+				&:before {width:0px; height:4px; background:$red; position:absolute; top:-4px; left:-20px; content:''; @include vendor(transition, width .4s); z-index:2; transform: translate3d(0,0,0);}
+			}
+			.details.open {border-left:4px solid $red;
+				&:after {width:20px;}
+			}
+			.child.open {//border-left:4px solid $red;
+				&:before {width:20px;}
+			}
+		}
+	}
+	.incoming {
+		.post-row.yellow {border-left:none;
+			&.open {border-color:#f6f8fb;
+				&:before, &:after {display:none}
+			}
+			.details {position:relative;
+				&:after {width:0px; height:4px; background:$yellow; position:absolute; bottom:0px; left:-4px; content:''; @include vendor(transition, width .4s); z-index:2; transform: translate3d(0,0,0);}
+			}
+			.child {position:relative;
+				&:before {width:0px; height:4px; background:$yellow; position:absolute; top:-4px; left:-20px; content:''; @include vendor(transition, width .4s); z-index:2; transform: translate3d(0,0,0);}
+			}
+			.details.open {border-left:4px solid $yellow;
+				&:before, &:after {width:20px;}
+			}
+			.child.open {
+				&:before {width:20px;}
+			}
+		}
+	}
+	.transactions {padding-bottom:0;
+		th {padding-left:20px; padding-right:20px;}
+		table tbody tr {
+			td {padding:10px 20px; font-size:14px;}
+			&:last-child td {padding-bottom:20px;}
+			td:nth-child(1) {width:60px;}
+			td:nth-child(3) {width:120px; text-align:right;}
+			td:nth-child(4) {background:#ffeff7; width:80px;
+				.negative {color:$text-color;
+					&:before {color:$red;}
+				}
+			}
+			td:nth-child(5) {background:#f0fef6; width:80px;
+				//.positive {font-family:ProximaNovaSoft-Bold;}
+			}
+			td:nth-child(6) {width:80px;
+				.negative {font-family:ProximaNovaSoft-Bold;}
+			} 
+		}
+		button {width:100%; background:#fff; outline:none; border:none; padding:20px 0;
+			&.disabled {opacity:.2; cursor:default;}
+		}
+	}
+}

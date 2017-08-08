@@ -1,0 +1,296 @@
+@import 'fonts';
+@import 'variables';
+@import 'mixins';
+@import 'font-awesome/font-awesome';
+@import 'compass';
+
+
+// GENERAL STYLES
+* {-webkit-tap-highlight-color: rgba(0,0,0,0);}
+
+html {height:100%; width:100%; position:fixed; -webkit-font-smoothing:antialiased;}
+body {
+	font-family: 'FuturaBT-Book';
+	-webkit-touch-callout:none;
+	-webkit-text-size-adjust:none;
+	-webkit-user-select:none;
+	font-size:19px;
+	line-height:27px;
+	height:100%;
+	width:100%;
+	margin:0px;
+	background:$darkgrey url('../img/splash.png'); background-size:cover;
+	color:#fff;
+	text-align:center;
+	text-transform:uppercase;
+@include breakpoint(mobile) {
+	font-size:15px;
+}}
+h1 {font-family: 'FuturaBT-BoldCondensed'; font-size:85px; line-height:90px; font-weight:normal; margin:0px; padding:0px; text-align:center;}
+h2 {font-family: 'FuturaBT-BoldCondensed'; font-size:30px; font-weight:normal; margin:0px; padding:0px; text-align:center;}
+a {color:#fff; text-decoration:none; border-bottom:4px solid $red;}
+button {padding:0; width:180px; height:60px; line-height:60px; background:$red; color:#fff; @include vendor(box-shadow, -8px 8px #bf1f2e); border:none; position:relative; outline:none; font-family:'FuturaBT-BoldCondensed'; font-size:30px; text-transform:uppercase; -webkit-appearance:none;
+	&:before {content:''; width:0; height:0; position:absolute; border:4px solid transparent; border-right-color:#bf1f2e; border-bottom-color:#bf1f2e; top:0; left:-8px;}
+	&:after {content:''; width:0; height:0; position:absolute; border:4px solid transparent; border-left-color:#bf1f2e; border-top-color:#bf1f2e; bottom:-8px; right:0;}
+	&.share {background:transparent url(../img/share.png) no-repeat; background-size:100% auto; width:60px; height:85px; @include vendor(box-shadow, none); /* line-height:137px; */ font-size:18px; padding-top:42px;
+		&:before, &:after {display:none;}
+	}
+}
+input {border:4px solid #fff; background:transparent; height:50px; max-width:350px; width:100%; outline:none; font-family: 'FuturaBT-BoldCondensed'; font-size:20px; text-transform:uppercase; color:$blue; text-align:center; display:block; margin:10px auto; @include box-sizing(border-box);
+	&.large {height:70px; max-width:500px; font-size:26px;}
+}
+input[type=checkbox], input[type=radio] {display:none;}
+label {display:block; font-family: 'FuturaBT-BoldCondensed'; font-size:20px; line-height:24px; font-weight:normal; text-transform:uppercase; padding-top:50px; padding-bottom:10px; cursor:pointer;
+&#name-label {font-size:26px;}
+	&.inline {margin-top:0; display:inline-block; padding:0; margin:0 10px;
+		span {border:4px solid #fff; height:50px; width:50px; display:inline-block; line-height:50px;}
+		input[type=radio]:checked + span {color:$blue;}
+		input[type=checkbox]:checked + span {background:url(../img/icon-tick.svg) no-repeat center center; background-size:39px auto;}
+
+		&.male {
+			input[type=radio] + span {background:url(../img/icon-male.svg) no-repeat center center; background-size:39px auto;}
+			input[type=radio]:checked + span {background:url(../img/icon-male-selected.svg) no-repeat center center; background-size:39px auto;}
+		}
+		&.female {
+			input[type=radio] + span {background:url(../img/icon-female.svg) no-repeat center center; background-size:39px auto;}
+			input[type=radio]:checked + span {background:url(../img/icon-female-selected.svg) no-repeat center center; background-size:39px auto;}
+		}
+	}
+@include breakpoint(mobile) {padding-top:20px;
+	&.inline {margin:10px;}
+}}
+
+.error {border-color:$red !important;}
+
+// ::-webkit-scrollbar{width:35px; height:35px;}
+// ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment{display:block;height:0;background-color:transparent;}
+// ::-webkit-scrollbar-track-piece{background:#585ca5; -webkit-border-radius:0; border-right:10px solid #89a15f}
+// ::-webkit-scrollbar-thumb:vertical{height:105px;background:transparent url('../img/scroll-handle.png') no-repeat center bottom; background-size:100% auto;}
+// ::-webkit-scrollbar-thumb:horizontal{width:50px;background-color:#999;}
+
+// @include keyframes(move) {
+// 	0% {top:0; left:0;}
+// 	17% {top:-2px; left:2px;}
+// 	34% {top:2px; left:4px;}
+// 	51% {top:0; left:6px;}
+// 	68% {top:-2px; left:4px;}
+// 	85% {top:2px; left:2px;}
+// 	100% {top:0; left:0;}
+// }
+@include keyframes(float) {
+	0% {top:0px;}
+	50% {top:-5px;}
+	100% {top:0px;}
+}
+
+@include keyframes(margin-bounce) {
+	0% {margin-bottom:20px;}
+	50% {margin-bottom:0px;}
+	100% {margin-bottom:20px;}
+}
+
+//CLASSES
+.group {@include group;}
+
+//GRID
+.grid {@extend .group;
+	.col {float:left; @include vendor(box-sizing, border-box)}
+
+	&.two-cols {margin:0 (-$inner/2);
+		.col {width:50%; padding:$inner/2;}
+	}
+	&.three-cols {margin:0 -5px;
+		.col {width:33.332%; padding:5px;}
+	}
+	&.four-cols {
+		.col {width:25%;}
+	}
+
+@include breakpoint(mobile) {
+	&.two-cols {margin:$inner 0;
+		.col {width:100%; padding:0; float:none;}
+	}
+	&.three-cols {margin:0;
+		.col {width:100%; padding:0; float:none; margin:$inner 0;}
+	}
+	&.four-cols {
+		.col {width:50%;}
+	}
+}}
+
+// LAYOUT
+#wrapper {height:100%; width:100%; overflow:hidden; opacity:1; @include vendor(transition, background-image 2s ease); box-sizing:border-box; padding:30px; background-size:cover; background-position:center center; position:relative;
+	&.faded {opacity:0;}
+	&.home {@include vendor(transition, none);}
+
+@include breakpoint(mobile) {
+	padding:20px;
+}}
+#preload {display:none;}
+
+#star-viewport {left:0; bottom:0; width:100%; height:100%;}
+
+// TEMPLATES
+.view {height:100%; @include background-image(linear-gradient(right top, rgb(213, 226, 118) 0%,rgb(28, 149, 189) 100%)); opacity:1; @include transition(opacity 0.4s);  @include hardware-acceleration;
+	&.home {background:transparent;
+		#logo {width:80%; margin:0 0 5% 0; position:relative; z-index:60; /* @include animation(float 2s infinite ease-out); */}
+		h1 {text-transform:uppercase;}
+		p {color:#000; text-transform:uppercase; font-family:'FuturaBT-BoldCondensed'; font-size:30px; margin-top:0;}
+		button {display:block; margin:50px auto; display:relative; z-index:50;
+			&.reset {background:rgb(61, 82, 163); font-size:14px; width:auto; height:34px; line-height:34px; @include vendor(box-shadow, -8px 8px $blue);
+				&:before {border-right-color:$blue; border-bottom-color:$blue;}
+				&:after {border-left-color:$blue; border-top-color:$blue;}
+			}
+		}
+		#welcome-panel {background:#fff; color:$blue; max-width:240px; margin:0 auto; font-family:'FuturaBT-BoldCondensed'; padding:10px 0 0 0; position:relative; z-index:50;
+			button {margin:10px auto; z-index:50;
+				&.reset {position:relative; top:20px; padding:0 10px;}
+			}
+		}
+		#star-pile {position:absolute; bottom:-30px; left:50%; margin-left:-512px; width:1024px; z-index:40;}
+		.falling-star {position:absolute; bottom:120%; left:0; width:200px; height:200px; @include transition(all, 2s linear); z-index:30; @include hardware-acceleration;}
+	}
+	&.registration {//overflow:auto;
+		form {max-width:90%; margin:0 auto; overflow:hidden; overflow-y:scroll; height:100%; -webkit-overflow-scrolling:touch;}
+		.fa-chevron-down {font-size:32px; position:absolute; width:40px; height:40px; text-align:center; left:50%; margin-left:-20px; bottom:0%; color:$red; z-index:900; margin-bottom:20px; @include animation(margin-bounce 1s infinite ease-out);}
+		button {margin-top:50px;}
+		.grid {margin-top:50px;
+			.col label {max-width:280px; margin:0 auto;}
+			.col label.inline span {margin-top:10px;}
+		}
+		label {position:relative;
+			sup {color:$red; font-size:35px; position:absolute;}
+		}
+
+		a {border-bottom:4px solid $red;}
+
+		.tc-popup {z-index:2; width:90%; height:90%; left:5%; top:5%; position:absolute; overflow:hidden; overflow-y:scroll; -webkit-overflow-scrolling:touch; background:$blue; font-size:24px; line-height:34px; text-transform:uppercase; font-family:'FuturaBT-BoldCondensed'; @include box-sizing(border-box); padding:150px;
+			&:after {content:''; display:block; position:fixed; height:150px; width:90%; bottom:5%; left:5%; @include background-image(linear-gradient(center bottom, $blue 40%,transparent 100%));}
+			.result-popup-content {
+				
+			}
+			a {color:#fff;}
+			button {margin:50px auto 0 auto; display:block;}
+		}
+	}
+	&.quiz {position:relative; background:transparent; font-family: 'FuturaBT-BoldCondensed';
+		.background {position:absolute; width:100%; height:100%; left:0; bottom:0%; @include transition(all 1s cubic-bezier(0.365, 0.060, 0.405, 1.285)); @include background-image(linear-gradient(right top, rgb(213, 226, 118) 0%,rgb(28, 149, 189) 100%)); @include box-shadow(0 0 5px rgba(0,0,0,0.6));  @include hardware-acceleration;
+			&.outside {@include transform(rotate(-30deg)); bottom:-150%; left:-50%;}
+		}
+		.number {position:absolute; background:$darkgrey; @include transform(rotate(-7deg)); padding:12px 80px 12px 12px; right:-44px; top:-24px; box-shadow:-20px 20px rgba(0, 0, 0, 0.2); z-index:90;}
+		header {height:40%; @include vendor(box-sizing, border-box); padding-top:40px; opacity:1; @include vendor(transition, top 1s cubic-bezier(0.365, 0.060, 0.405, 1.585)); font-size:30px; position:relative; top:0;  @include hardware-acceleration;
+			h1 {font-size:85px;}
+			p {background:$blue; width:60%; margin:0 auto; @include transform(rotate(-6deg)); padding:20px; box-shadow:-20px 20px rgba(0, 0, 0, 0.2); position:absolute; bottom:0; left:50%; margin-left:-30%;}
+			&.animating {top:-50%;}
+		}
+		.options {height:60%; font-size:24px; line-height:27px;
+			.option {width:50%; height:100%; float:left; position:relative; //@include background-image(linear-gradient(left bottom, rgb(213, 226, 118) 0%,rgb(28, 149, 189) 100%));
+				
+				//&:nth-child(odd) {@include background-image(linear-gradient(left bottom, rgb(28, 149, 189) 0%,rgb(213, 226, 118) 100%));}
+
+				p {margin:0; bottom:40%; position:absolute; width:100%; text-align:center; @include box-sizing(border-box); padding:0 20px;}
+				button {bottom:20%; position:absolute; left:50%; margin-left:-88px;}
+
+				//Start values
+				top:0;
+				margin-bottom:0;
+				@include vendor(transform, rotate(0deg));
+				@include hardware-acceleration;
+
+				//Transform origins
+				@include vendor(transform-origin, 0 100%);
+				&:nth-child(odd) {@include vendor(transform-origin, 100% 100%);}
+
+				//Transitions for animation
+				@include vendor(transition, all 0.6s);
+				&:nth-child(odd) {@include vendor(transition, all 0.3s);  @include hardware-acceleration;}
+
+				&.animating {
+					@include vendor(transform, rotate(40deg)); top:100%; margin-bottom:40px;
+					&:nth-child(odd) {@include vendor(transform, rotate(-40deg));}
+				}
+			}
+			&.count4, &.count5 {
+				.option {height:50%;
+					p {margin:60px 0;}
+				}
+			}
+		}
+	}
+	&.result {position:absolute; top:0; left:0; width:100%; @include background-image(linear-gradient(left center, rgb(213, 226, 118) 0%,rgb(28, 149, 189) 100%));//overflow:scroll;
+		h1 {font-size:40px; z-index:2; line-height:38px; position:absolute; left:5%; top:80px; background:$blue; width:auto; margin:0 auto; @include transform(rotate(-6deg)); padding:14px 20px 5px; text-transform:uppercase; box-shadow:-20px 20px rgba(0, 0, 0, 0.2);}
+		img {max-height:100%; max-width:100%; width:auto; @include transform(rotate(-8deg));}
+		#result-toggle {position:absolute; top:70px; right:80px; width:80px; height:80px; border-radius:40px; font-size:51px; line-height:83px; z-index:900;
+			&:before {display:none;}
+			&:after {border:none; content:'What does it mean?'; width:120px; height:60px; font-size:24px; line-height:28px; bottom:-75px; left:50%; margin-left:-63px;}
+			&.active:after {display:none;}
+		}
+		.result-popup {width:100%; height:100%; position:absolute; background:rgba(137, 161, 95, 0.8); z-index:800; top:0%; left:0%;
+			.result-popup-content {width:90%; height:95%; left:5%; top:5%; position:absolute; overflow:hidden; overflow-y:scroll; -webkit-overflow-scrolling:touch; background:$blue; font-size:24px; line-height:34px; text-transform:uppercase; font-family:'FuturaBT-BoldCondensed'; @include box-sizing(border-box); padding:150px;
+				//&:after {content:''; display:block; position:fixed; height:150px; width:90%; bottom:0%; left:5%; @include background-image(linear-gradient(center bottom, $blue 40%,transparent 100%));}
+			}
+			ul {margin:0; padding:0; list-style:none;}
+			a {color:#fff;}
+			button {margin-top:100px;}
+		}
+		button.share.tablet {position:fixed; z-index:900; right:93px; top:180px; display:block;}
+		button.share.mobile {display:none;} 
+		.fa-chevron-down {font-size:32px; position:absolute; width:40px; height:40px; text-align:center; left:50%; margin-left:-20px; bottom:0%; color:$red; z-index:900; margin-bottom:20px; @include animation(margin-bounce 1s infinite ease-out);}
+		//h1, h2, p, ul {display:none};
+	}
+@include breakpoint(mobile) {
+	&.home {position:absolute; left:0; top:0;
+		#logo {width:90%; margin-top:30%;}
+		#star-pile {width:100%; margin-left:0; left:0;}
+		.falling-star {width:100px; height:100px;}
+	}
+	&.registration {padding-bottom:20px; @include box-sizing(border-box);
+		.col {margin-bottom:50px;}	
+		button {margin-top:0;}
+		.tc-popup {padding:50px 20px 150px 20px;}
+	}
+	&.quiz {
+		header p {width:82%; font-size:22px; margin-left:-47%;}
+		.background.outside {@include transform(rotate(0deg)); bottom:-150%; left:0%;}
+		.number {right:-84px;}
+		.options {font-size:18px; line-height:20px;
+			.option {
+				p {margin:0px !important; padding:10px; bottom:22%;}
+				button {bottom:8%; width:100px; height:40px; line-height:40px; font-size:18px; margin-left:-50px;}
+				@include vendor(transition, none);
+				&:nth-child(odd) {@include vendor(transition, none);}
+				&.animating {
+					@include vendor(transform, rotate(0deg)); top:100%; margin-bottom:40px;
+					&:nth-child(odd) {@include vendor(transform, rotate(0deg));}
+				}
+			}
+		}
+	}
+	&.result {
+		#result-toggle {right:10px; top:10px;
+			&:after {display:none;}
+		}
+		h1 {top:20px;}
+		img {margin-top:100px;}
+		.result-popup .result-popup-content {padding:50px 20px 150px 20px;}
+		button.share.mobile {position:static; display:block; margin:40px auto; display:block;}
+		button.share.tablet {display:none;}
+	}
+}
+@include breakpoint(mobile-landscape) {
+	&.home {
+		#logo {width:50%; margin:0;}
+		#welcome-panel {padding-top:0;
+			button {margin:0 auto;}
+		}
+	}
+	&.quiz {
+		header p {font-size:18px; padding:10px; margin-left:-41%;}
+	}
+	&.result {
+		img {margin-top:0;}
+		#result-toggle {right:20px;
+			&:after {display:block;}
+		}
+	}
+}}
